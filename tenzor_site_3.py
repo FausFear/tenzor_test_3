@@ -12,15 +12,18 @@ class SbisDownloader:
         self.url = url
         self.browser = Chrome()
 
+    # Открываем сайт
     def open_website(self):
         self.browser.get(self.url)
         time.sleep(2)
 
-    def download_sbis(self):
+    # Нажимаем кнопку Скачать
+    def download_sbis_key(self):
         button_download_sbis = self.browser.find_element(By.PARTIAL_LINK_TEXT, "Скачать СБИС")
         button_download_sbis.send_keys(Keys.ENTER)
         time.sleep(2)
 
+    # Нажимаем кнопку на боковой панели Плагин
     def download_plugin(self):
         button_plugin = self.browser.find_elements(By.CSS_SELECTOR, ".controls-TabButton__caption")[1]
         self.browser.execute_script("arguments[0].scrollIntoView(true);", button_plugin)
@@ -28,7 +31,7 @@ class SbisDownloader:
         actions.move_to_element(button_plugin).click().perform()
         time.sleep(2)
 
-
+    # Скачиваем файл
     def download_file_name(self):
         file_button_download = (
             self.browser.find_elements(By.CSS_SELECTOR, ".sbis_ru-DownloadNew-loadLink__link.js-link"))[16]
@@ -38,11 +41,13 @@ class SbisDownloader:
         time.sleep(5)
         return file_name
 
+    # Получаем размер файла в мегабайтах
     def get_file_size(self, file_name):
         size_in_bytes = os.path.getsize(file_name)
         size_in_mb = round(size_in_bytes / (1024 * 1024), 2)
         return size_in_mb
 
+    # Сравниваем размеры файла и размеры указанные на сайте
     def compare_file_size(self, file_size, expected_size):
         return file_size == expected_size
 
@@ -50,7 +55,6 @@ class SbisDownloader:
         self.browser.quit()
 
 
-# Пример использования
 def main():
     sbis_downloader = SbisDownloader("https://sbis.ru/")
     sbis_downloader.open_website()
