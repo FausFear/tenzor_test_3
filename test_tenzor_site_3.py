@@ -22,8 +22,8 @@ def test_download_file(sbis_downloader):
 def test_file_size(sbis_downloader):
     downloaded_file = sbis_downloader.download_file_name()
     expected_size = float(
-        sbis_downloader.browser.find_elements(By.CSS_SELECTOR, ".sbis_ru-DownloadNew-loadLink__link.js-link")[
-            16].text.split(' ')[-2])
+        sbis_downloader.browser.find_elements(By.CSS_SELECTOR, 
+            ".sbis_ru-DownloadNew-loadLink__link.js-link")[16].text.split(' ')[-2])
     file_size = sbis_downloader.get_file_size(downloaded_file)
     assert file_size == expected_size
 
