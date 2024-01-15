@@ -13,10 +13,12 @@ def sbis_downloader():
     yield sbis_downloader
     sbis_downloader.close_browser()
 
+# Тест на проверку скачался ли файл
 def test_download_file(sbis_downloader):
     downloaded_file = sbis_downloader.download_file_name()
     assert os.path.exists(downloaded_file)
 
+# Тест на сравнение размеров файла и размеров указанных на сайте
 def test_file_size(sbis_downloader):
     downloaded_file = sbis_downloader.download_file_name()
     expected_size = float(
